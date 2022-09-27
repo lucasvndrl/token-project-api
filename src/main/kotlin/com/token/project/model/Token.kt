@@ -1,6 +1,7 @@
 package com.token.project.model
 
-import javax.persistence.Column
+import java.time.LocalDate
+import java.util.Date
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -11,7 +12,7 @@ import javax.persistence.Table
 data class Token(
     @Id @GeneratedValue var id: Int,
     var token_type: String,
-    var token_date: String
+    var token_date: LocalDate = LocalDate.now()
 )
 
 
