@@ -54,6 +54,8 @@ class TokenController(val service: TokenService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody token: Token): Token {
+        val tokenNumber = "${token.token_date.year.minus(2000)}${token.token_date.monthValue}${token.token_date.dayOfMonth}-${token.token_type}"
+        token.token_number = tokenNumber
         return service.create(token)
     }
 }

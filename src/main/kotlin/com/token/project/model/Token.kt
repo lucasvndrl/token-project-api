@@ -13,7 +13,8 @@ data class Token(
     @Id @GeneratedValue var id: Int,
     var token_type: String,
     var token_date: LocalDate = LocalDate.now(),
-    var token_finished: Boolean = false
+    var token_finished: Boolean = false,
+    var token_number: String = ""
 )
 
 
