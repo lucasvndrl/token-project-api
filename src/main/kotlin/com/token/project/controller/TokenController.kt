@@ -36,6 +36,21 @@ class TokenController(val service: TokenService) {
         return service.getAllByMes(month.month)
     }
 
+    @GetMapping("/finished")
+    fun getAllFinishedTokens(): List<Token> {
+        return service.getAllFinishedTokens()
+    }
+
+    @GetMapping("/priority")
+    fun getAllPriorityTokens(): List<Token> {
+        return service.getAllPriorityTokens()
+    }
+
+    @GetMapping("/finished_priority")
+    fun getAllFinishedPriorityTokens(): List<Token> {
+        return service.getAllFinishedPriorityTokens()
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody token: Token): Token {

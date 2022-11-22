@@ -5,4 +5,5 @@ object Constants {
     var START_DAY = "01"
     var MES_30 = "30"
     var MES_31 = "31"
+    var PRIORITY_TOKEN = "SP"
 }
