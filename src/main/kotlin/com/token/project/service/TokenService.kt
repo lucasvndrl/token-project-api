@@ -14,6 +14,8 @@ import java.util.Date
 class TokenService(val repository: TokenRepository) {
     fun getAll(): List<Token> = repository.findAll()
 
+    fun findAllUnfinishedTokens(): List<Token> = repository.findAllUnfinishedTokens()
+
     fun getAllByDay(day: LocalDate): List<Token> {
         return repository.findAllByDay(day)
     }
@@ -34,6 +36,10 @@ class TokenService(val repository: TokenRepository) {
 
     fun getAllFinishedTokens(): List<Token> {
         return repository.findAllFinishedTokens(true)
+    }
+
+    fun updateTokenStatus(tokenId: Int) {
+        return repository.updateTokenStatus(tokenId)
     }
 
     fun create(token: Token): Token = repository.save(token)

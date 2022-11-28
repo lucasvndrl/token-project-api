@@ -7,8 +7,11 @@ import com.token.project.utils.MonthObject
 import org.hibernate.annotations.Parameter
 import org.springframework.data.repository.query.Param
 import org.springframework.http.HttpStatus
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
@@ -24,6 +27,11 @@ class TokenController(val service: TokenService) {
     @GetMapping("/")
     fun getaAll(): List<Token> {
         return service.getAll()
+    }
+
+    @GetMapping("/unfinished")
+    fun findAllUnfinishedTokens(): List<Token> {
+        return service.findAllUnfinishedTokens()
     }
 
     @GetMapping("/day")
@@ -49,6 +57,12 @@ class TokenController(val service: TokenService) {
     @GetMapping("/finished_priority")
     fun getAllFinishedPriorityTokens(): List<Token> {
         return service.getAllFinishedPriorityTokens()
+    }
+
+    @Transactional
+    @PutMapping("/{tokenId}")
+    fun updateTokenStatus(@PathVariable tokenId: Int) {
+        return service.updateTokenStatus(tokenId)
     }
 
     @PostMapping

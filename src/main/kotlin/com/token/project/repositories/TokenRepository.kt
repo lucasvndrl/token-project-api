@@ -2,6 +2,7 @@ package com.token.project.repositories
 
 import com.token.project.model.Token
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
@@ -11,6 +12,9 @@ import java.time.LocalDate
 interface TokenRepository : JpaRepository<Token, Int> {
     @Query("SELECT tk FROM Token tk WHERE tk.token_date = :day")
     fun findAllByDay(@Param("day") dia: LocalDate): List<Token>
+
+    @Query("SELECT tk FROM Token tk WHERE tk.token_finished = false")
+    fun findAllUnfinishedTokens(): List<Token>
 
     @Query(
         "SELECT * FROM tokens tk WHERE tk.token_date >= :startDate AND tk.token_date <= :endDate",
@@ -26,4 +30,11 @@ interface TokenRepository : JpaRepository<Token, Int> {
 
     @Query("SELECT * FROM tokens tk WHERE tk.token_type = :priority AND tk.token_finished = :finished", nativeQuery = true)
     fun findAllFinishedPriorityTokens(@Param("priority") priority: String, @Param("finished") finished: Boolean): List<Token>
+
+    @Modifying
+    @Query(
+        "UPDATE tokens tk SET tk.token_finished = true WHERE tk.id = :id",
+        nativeQuery = true
+    )
+    fun updateTokenStatus(@Param("id") id: Int)
 }
